@@ -1,8 +1,8 @@
 import React from 'react';
 import Companies from '../api/companies'
 import {connect} from 'react-redux'
-import {addSymbols} from '../actions'
-import {Segment, Input } from 'semantic-ui-react'
+import {addSymbols, selectSymbol} from '../actions'
+import {Segment, Container } from 'semantic-ui-react'
 
 class SearchCompany extends React.Component{
 
@@ -26,24 +26,25 @@ class SearchCompany extends React.Component{
     }
 
     selectSymbol = (e) => {
-        console.log(e.target)
+        this.props.dispatch(selectSymbol(e.target.children[0].innerText))
     }
 
     render(){
-        let filteredSymbols = this.searchSymbol().map(item => {return <li>{item.name}</li>});
+        let filteredSymbols = this.searchSymbol().map(item => {return <Segment compact onClick={this.selectSymbol}><b>{item.symbol}</b> - {item.name}</Segment>});
 
-    
         return(
-            <Segment>
-               
-                    
-            </Segment>
+            <Container>
+                <input onChange={this.handleChange} value={this.state.value} placeholder="Search company" />
+               <Segment.Group>
+                   {filteredSymbols}
+               </Segment.Group>
+            </Container>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    return { symbols: state.symbols }
+    return { symbols: state.symbols, selectedSymbol: state.symbol }
   }
 
 export default connect(mapStateToProps)(SearchCompany);

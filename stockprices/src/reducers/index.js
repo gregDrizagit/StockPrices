@@ -1,6 +1,7 @@
 const stockData = (state = {
     //default values
-    symbols: []
+    symbols: [], 
+    symbol: ''
 }
 , action) => {
     switch (action.type) {
@@ -8,6 +9,11 @@ const stockData = (state = {
         return {
           ...state,
             symbols: action.symbols
+        }
+        case 'SELECT_SYMBOLS':
+        return {
+          ...state,
+            symbol: action.symbol
         }
 
       default:
