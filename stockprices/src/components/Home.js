@@ -1,20 +1,27 @@
 import React from 'react';
-import Companies from '../api/companies'
+import SearchCompany from './SearchCompany'; 
+import { Jumbotron } from 'react-bootstrap';
+import {connect} from 'react-redux'
+
+
 class Home extends React.Component{
 
-    componentDidMount(){
-        Companies.getAllSymbols().then(console.log); 
-    }
-
+  
     render(){
         return(
-            <div>
-
-            </div> 
+            <Jumbotron>
+                <SearchCompany />
+            </Jumbotron>
 
         )
     }
 }
 
 
-export default Home
+const mapStateToProps = (state) => {
+    return { symbols: state.symbols}
+
+  }
+
+
+export default connect()(Home); 
