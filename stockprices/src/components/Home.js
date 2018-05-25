@@ -8,6 +8,7 @@ class Home extends React.Component{
 
   
     render(){
+        console.log(this.props)
         return(
             <div>
                 <SearchCompany />
@@ -21,5 +22,4 @@ const mapStateToProps = (state) => {
     return { symbols: state.symbols, selectedSymbol: state.symbol }
   }
 
-//   connect(mapStateToProps)(
-export default Home; 
+export default connect(mapStateToProps)(Home); 

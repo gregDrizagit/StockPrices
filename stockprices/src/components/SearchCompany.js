@@ -19,13 +19,16 @@ class SearchCompany extends React.Component{
 
    
 
-    handleChange = (e) =>{
-        this.setState({value: e.target.value })
+    handleChange = (e, {value}) =>{
+        this.setState({value})
+        
+        this.props.dispatch(selectSymbol(value))
     }
 
-    selectSymbol = (e) => {
-        // this.props.dispatch(selectSymbol())
-        console.log(e.target.value)
+    selectSymbol = (e,{value}) => {
+        this.setState({value: value})
+        // 
+        
     }
 
     render(){
@@ -37,9 +40,9 @@ class SearchCompany extends React.Component{
                     <Dropdown placeholder='Select Company' 
                             fluid 
                             search 
-                            selection 
-                            onSearchChange={this.handleChange}
-                            onClick={this.selectSymbol}
+                            selection
+                            value={this.state.value}
+                            onChange={this.handleChange}
                             options={this.state.symbols} 
 
                             />
