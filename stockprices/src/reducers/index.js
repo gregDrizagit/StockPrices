@@ -1,7 +1,8 @@
 const stockData = (state = {
     //default values
     symbols: [], 
-    symbol: ''
+    symbol: '', 
+    quote: {}
 }
 , action) => {
     switch (action.type) {
@@ -14,6 +15,11 @@ const stockData = (state = {
         return {
           ...state,
             symbol: action.symbol
+        }
+        case 'DELAYED_QUOTE':
+        return {
+          ...state,
+            quote: action.quote
         }
 
       default:
