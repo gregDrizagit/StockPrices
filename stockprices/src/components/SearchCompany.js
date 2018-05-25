@@ -21,8 +21,10 @@ class SearchCompany extends React.Component{
 
     handleChange = (e, {value}) =>{
         this.setState({value})
-        
-        this.props.dispatch(selectSymbol(value))
+        Companies.getCompanyForSymbol(value).then(company =>{
+            this.props.dispatch(selectSymbol(company)); 
+        })
+
     }
 
     selectSymbol = (e,{value}) => {
