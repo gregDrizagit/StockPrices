@@ -8,9 +8,10 @@ import rootReducer from './reducers';
 import 'semantic-ui-css/semantic.min.css';
 
 const store = createStore(rootReducer)
-
+// {/*  */} </Provider>
 ReactDOM.render(<Provider store={store}>
                     <Router>
                         <App />
                     </Router>
-                </Provider>, document.getElementById('root'));
+                </Provider>
+               , document.getElementById('root'));

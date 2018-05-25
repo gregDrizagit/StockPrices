@@ -2,42 +2,51 @@ import React from 'react';
 import Companies from '../api/companies'
 import {connect} from 'react-redux'
 import {addSymbols, selectSymbol} from '../actions'
-import {Segment, Container } from 'semantic-ui-react'
+import {Segment, Container, Dropdown } from 'semantic-ui-react'
 
 class SearchCompany extends React.Component{
 
     componentDidMount(){
         Companies.getAllSymbols().then(symbols =>{ 
             this.props.dispatch(addSymbols(symbols)); 
-            this.setState({symbols: symbols})
+            let mappedSymbols = symbols.map(item => {return {key: item.symbol, value:item.symbol, text:item.symbol+ " - " + item.name }});
+
+            this.setState({symbols: mappedSymbols}) 
         }); 
     }
 
     state = {value: '', symbols: []};
 
-    searchSymbol = () => {
-
-        let filteredSymbols = this.state.symbols.filter(sym => {return sym.name.includes(this.state.value)})
-        return filteredSymbols; 
-    }
+   
 
     handleChange = (e) =>{
         this.setState({value: e.target.value })
     }
 
     selectSymbol = (e) => {
-        this.props.dispatch(selectSymbol(e.target.children[0].innerText))
+        // this.props.dispatch(selectSymbol())
+        console.log(e.target.value)
     }
 
     render(){
-        let filteredSymbols = this.searchSymbol().map(item => {return <Segment compact onClick={this.selectSymbol}><b>{item.symbol}</b> - {item.name}</Segment>});
-
         return(
             <Container>
-                <input onChange={this.handleChange} value={this.state.value} placeholder="Search company" />
-               <Segment.Group>
-                   {filteredSymbols}
-               </Segment.Group>
+                {
+                    this.state.symbols.length > 0 ?
+
+                    <Dropdown placeholder='Select Company' 
+                            fluid 
+                            search 
+                            selection 
+                            onSearchChange={this.handleChange}
+                            onClick={this.selectSymbol}
+                            options={this.state.symbols} 
+
+                            />
+                    :
+                    null
+                }
+
             </Container>
         )
     }
@@ -46,5 +55,5 @@ class SearchCompany extends React.Component{
 const mapStateToProps = (state) => {
     return { symbols: state.symbols, selectedSymbol: state.symbol }
   }
-
+//   connect(mapStateToProps)(
 export default connect(mapStateToProps)(SearchCompany);

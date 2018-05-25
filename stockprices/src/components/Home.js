@@ -9,15 +9,17 @@ class Home extends React.Component{
   
     render(){
         return(
-            <SearchCompany />
+            <div>
+                <SearchCompany />
+            </div>
         )
     }
 }
 
 
 const mapStateToProps = (state) => {
-    return { symbols: state.symbols }
+    return { symbols: state.symbols, selectedSymbol: state.symbol }
   }
 
-
-export default connect(mapStateToProps)(Home); 
+//   connect(mapStateToProps)(
+export default Home; 
