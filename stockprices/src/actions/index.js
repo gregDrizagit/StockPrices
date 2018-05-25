@@ -13,3 +13,8 @@ export const delayedQuote = quote => ({
     type: 'DELAYED_QUOTE',
     quote: quote 
 })
+
+export const peerSymbols = symbols => ({
+    type: 'PEER_SYMBOLS',
+    peerSymbols: symbols 
+})

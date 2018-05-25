@@ -21,6 +21,11 @@ const stockData = (state = {
           ...state,
             quote: action.quote
         }
+        case 'PEER_SYMBOLs':
+        return {
+          ...state,
+            peerSymbols: action.symbols
+        }
 
       default:
       return state

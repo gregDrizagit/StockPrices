@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Home from './components/Home'; 
+import Nav from './components/Nav';
+
 import { Route, Switch } from 'react-router'
 import { Dropdown } from 'semantic-ui-react'
 import { withRouter} from 'react-router-dom';
@@ -9,6 +11,7 @@ class App extends Component {
   render() {
     return (
       <div> 
+        <Nav history={this.props.history} />
         <Switch>
           <Route exact path="/home" render={(routerProps) => {return <Home {...routerProps} /> }}/>
           {/* <Route exact path="/facet1" render={(routerProps) => {return  }}/>

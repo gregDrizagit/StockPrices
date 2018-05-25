@@ -1,7 +1,7 @@
 import React from 'react';
 import Companies from '../api/companies'
 import {connect} from 'react-redux'
-import {addSymbols, selectSymbol, delayedQuote} from '../actions'
+import {addSymbols, selectSymbol, delayedQuote, peerSymbols} from '../actions'
 import {Segment, Container, Dropdown } from 'semantic-ui-react'
 
 class SearchCompany extends React.Component{
@@ -22,10 +22,13 @@ class SearchCompany extends React.Component{
             this.props.dispatch(delayedQuote(quote))
             console.log(quote);
         })
+        Companies.getPeersForSymbol(value).then(peers => {
+            this.props.dispatch(peerSymbols(peers))
+        })
 
     }
 
-    selectSymbol = (e,{value}) => {
+    selectSymbol = (e, {value}) => {
         this.setState({value: value})
     }
 
@@ -54,7 +57,7 @@ class SearchCompany extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    return { symbols: state.symbols, selectedSymbol: state.symbol,  }
+    return { symbols: state.symbols, selectedSymbol: state.symbol }
   }
 //   connect(mapStateToProps)(
 export default connect(mapStateToProps)(SearchCompany);

@@ -14,6 +14,10 @@ class Companies{
     return fetch(requestPrefix + `/stock/${symbol}/delayed-quote`).then(resp => resp.json())
 }
 
+static getPeersForSymbol(symbol){
+    return fetch(requestPrefix + `/stock/${symbol}/peers`).then(resp => resp.json())
+}
+
 }
 
 export default Companies; 
