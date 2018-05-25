@@ -1,8 +1,8 @@
 import React from 'react';
 import Companies from '../api/companies'
-import {FormControl } from 'react-bootstrap';
 import {connect} from 'react-redux'
 import {addSymbols} from '../actions'
+import {Segment, Input } from 'semantic-ui-react'
 
 class SearchCompany extends React.Component{
 
@@ -25,25 +25,19 @@ class SearchCompany extends React.Component{
         this.setState({value: e.target.value })
     }
 
+    selectSymbol = (e) => {
+        console.log(e.target)
+    }
+
     render(){
+        let filteredSymbols = this.searchSymbol().map(item => {return <li>{item.name}</li>});
 
-        let filteredSymbols = this.searchSymbol().map(item => {return item.name});
-        
-
+    
         return(
-            <div>
-                <form>
-                    <FormControl
-                        type="text"
-                        value={this.state.value}
-                        placeholder="Enter Symbol or Company Name"
-                        bsSize='large'
-                        onChange={this.handleChange}
-                    />
-                    <FormControl.Feedback />
-                </form>
-                {filteredSymbols}
-            </div>
+            <Segment>
+               
+                    
+            </Segment>
         )
     }
 }
