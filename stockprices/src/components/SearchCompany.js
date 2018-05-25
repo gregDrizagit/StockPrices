@@ -7,17 +7,29 @@ import {addSymbols} from '../actions'
 class SearchCompany extends React.Component{
 
     componentDidMount(){
-        Companies.getAllSymbols().then(console.log); 
+        Companies.getAllSymbols().then(symbols =>{ 
+            this.props.dispatch(addSymbols(symbols)); 
+            this.setState({symbols: symbols})
+        }); 
     }
 
-    state = {value: ''};
+    state = {value: '', symbols: []};
+
+    searchSymbol = () => {
+
+        let filteredSymbols = this.state.symbols.filter(sym => {return sym.name.includes(this.state.value)})
+        return filteredSymbols; 
+    }
 
     handleChange = (e) =>{
         this.setState({value: e.target.value })
     }
 
     render(){
-        console.log(this.state.value)
+
+        let filteredSymbols = this.searchSymbol().map(item => {return item.name});
+        
+
         return(
             <div>
                 <form>
@@ -30,10 +42,14 @@ class SearchCompany extends React.Component{
                     />
                     <FormControl.Feedback />
                 </form>
+                {filteredSymbols}
             </div>
         )
     }
 }
 
+const mapStateToProps = (state) => {
+    return { symbols: state.symbols }
+  }
 
-export default connect()(SearchCompany);
+export default connect(mapStateToProps)(SearchCompany);

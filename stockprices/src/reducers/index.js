@@ -1,5 +1,6 @@
 const stockData = (state = {
     //default values
+    symbols: []
 }
 , action) => {
     switch (action.type) {
