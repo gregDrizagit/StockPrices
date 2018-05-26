@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {Container} from 'semantic-ui-react';
 import { Chart } from 'react-google-charts';
-import {Button} from 'semantic-ui-react'
+import {Button, Grid} from 'semantic-ui-react'
 
 import Data from '../api/data';
 
@@ -13,10 +13,11 @@ class ChartView extends React.Component{
         super(props);
         this.state = {
           options: {
-            title: 'Age vs. Weight comparison',
+            title: 'Apple Prices',
             hAxis: { title: 'Time' },
             vAxis: { title: 'Price' },
             legend: 'none',
+            colors:['green']
           },
           interval: '2y'
       } 
@@ -32,8 +33,7 @@ class ChartView extends React.Component{
     }
 
     handleIntervalButtons = (interval) => {
-        this.setState({interval: interval})
-        this.getSymbolData()
+        this.setState({interval: interval}, this.getSymbolData())
     }
 
     restructureChartData = (data) =>{
@@ -54,15 +54,6 @@ class ChartView extends React.Component{
                 "rows": [
                     ...timeAndPrice
                 ],
-                "options": {
-                  "legend": true,
-                  "hAxis": {
-                    "title": "Time"
-                  },
-                  "vAxis": {
-                    "title": "Price"
-                  }
-                },
                 "width": "100%"
               }
         
@@ -71,34 +62,44 @@ class ChartView extends React.Component{
 
     render(){
         return(
-            <Container>
-                <div>Chart about all the shit</div>
-                {
-                    this.state.data ? 
-                    <div>
-                    <Chart
-                        chartType="LineChart"
-                        rows={this.state.data.rows}
-                        columns={this.state.data.columns}
-                        graph_id="LineChart"
-                        width="100%"
-                        height="500px"
-                        legend_toggle
-                    />
-                    <Button.Group >
-                        <Button onClick={() => this.handleIntervalButtons('1d')} content="1D" />
-                        <Button onClick={() => this.handleIntervalButtons('1m')} content="1M" />
-                        <Button onClick={() => this.handleIntervalButtons('3m')} content="3M" />
-                        <Button onClick={() => this.handleIntervalButtons('1Y')} content="1Y" />
-                        <Button onClick={() => this.handleIntervalButtons('2Y')} content="2Y" />
-                        <Button onClick={() => this.handleIntervalButtons('5Y')} content="5Y" />
-                    </Button.Group>
-                    </div>
-                    :
-                    <h1>Loading</h1>
+                <Grid columns={2} divided>
+                    <Grid.Column width={10}>
+                        {
+                            this.state.data ? 
+                            <div>
+                                <Chart
+                                    chartType="LineChart"
+                                    rows={this.state.data.rows}
+                                    columns={this.state.data.columns}
+                                    options={this.state.options}
+                                    graph_id="LineChart"
+                                    width="100%"
+                                    height="600px"
+                                    legend_toggle
+                                />
+                                <div style={{textAlign: "center"}}>
+                                <Button.Group basic >
+                                    <Button onClick={() => this.handleIntervalButtons('ytd')} content="YTD" />
+                                    <Button onClick={() => this.handleIntervalButtons('1m')} content="1M" />
+                                    <Button onClick={() => this.handleIntervalButtons('3m')} content="3M" />
+                                    <Button onClick={() => this.handleIntervalButtons('6m')} content="6M" />
+                                    <Button onClick={() => this.handleIntervalButtons('1y')} content="1Y" />
+                                    <Button onClick={() => this.handleIntervalButtons('2y')} content="2Y" />
+                                    <Button onClick={() => this.handleIntervalButtons('5y')} content="5Y" />
+                                </Button.Group>
+                                </div>
+                            </div>
+                            :
+                            <h1>Loading</h1>
 
-                }
-            </Container>
+                        }
+                    </Grid.Column>
+                    <Grid.Column style={{backgroundColor:'#ebebe0'}} width={6}>
+                        <div>
+                            <h1>data</h1>
+                        </div>
+                    </Grid.Column>
+                </Grid>
         )
     }
 }
