@@ -14,7 +14,11 @@ export const delayedQuote = quote => ({
     quote: quote 
 })
 
-export const peerSymbols = symbols => ({
+export const peerSymbols = peerSymbols => ({
     type: 'PEER_SYMBOLS',
-    peerSymbols: symbols 
+    peerSymbols: peerSymbols 
+})
+export const addStats = stats => ({
+    type: 'PEER_SYMBOLS',
+    companyStats: stats 
 })

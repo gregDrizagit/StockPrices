@@ -7,10 +7,10 @@ class Nav extends React.Component{
         return(
             <Segment basic raised clearing>
                 <Header as='h2' floated='left'>
-                    <Icon size='large' onClick={() => this.props.history.goBack()} name="chevron left" />
+                    <Icon size='large' onClick={() => this.props.history.push()} name="chevron left" />
                 </Header>
                 <Header  as='h2' floated='right'>
-                    <Icon size='large' onClick={() => this.props.history.goForward()} name='chevron right' />
+                    <Icon size='large' onClick={() => this.props.history.push('/chart')} name='chevron right' />
                 </Header>
             </Segment>
         )

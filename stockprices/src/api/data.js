@@ -12,17 +12,19 @@ class Data{
     // /stock/aapl/chart/3m
     // /stock/aapl/chart/1m
     // /stock/aapl/chart/1d
+
+static getChartForSymbolAtInterval(symbol, interval){
+    return fetch(requestPrefix + `/stock/${symbol}/chart/${interval}`).then(resp => resp.json())
+}
     
  static getStatsForSymbol(symbol){
-    return fetch(requestPrefix + `/stock/${aapl}/stats`).then(resp => resp.json())
+    return fetch(requestPrefix + `/stock/${symbol}/stats`).then(resp => resp.json())
  }
 
  static getFinancialsforSymbol(symbol){
-     return fetch(requestPrefix + `/stock/${symbol}/company`).then(resp => resp.json())
+     return fetch(requestPrefix + `/stock/${symbol}/financials`).then(resp => resp.json())
  }
-
-
 
 }
 
-export default Companies; 
+export default Data; 

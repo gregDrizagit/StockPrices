@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Home from './components/Home'; 
-import Nav from './components/Nav';
+import Home from './components/Home';
+import ChartView from './components/ChartView';
 
 import { Route, Switch } from 'react-router'
 import { Dropdown } from 'semantic-ui-react'
@@ -11,11 +11,10 @@ class App extends Component {
   render() {
     return (
       <div> 
-        <Nav history={this.props.history} />
         <Switch>
           <Route exact path="/home" render={(routerProps) => {return <Home {...routerProps} /> }}/>
-          {/* <Route exact path="/facet1" render={(routerProps) => {return  }}/>
-          <Route exact path="/facet2" render={(routerProps) => {return  }}/>
+          <Route exact path="/chart" render={(routerProps) => {return <ChartView {...routerProps} />  }}/> */}
+          {/* <Route exact path="/facet2" render={(routerProps) => {return  }}/>
           <Route exact path="/facet3" render={(routerProps) => {return  }}/>
           <Route exact path="/facet4" render={(routerProps) => {return  }}/> */}
         </Switch>
@@ -23,5 +22,4 @@ class App extends Component {
     );
   }
 }
-// withRouter()
 export default withRouter(App);
