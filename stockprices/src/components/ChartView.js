@@ -15,36 +15,69 @@ class ChartView extends React.Component{
             hAxis: { title: 'Time' },
             vAxis: { title: 'Price' },
             legend: 'none',
-          },
-          data: [
-            ['Age', 'Weight'],
-            [8, 12],
-            [4, 5.5],
-            [11, 14],
-            [4, 5],
-            [3, 3.5],
-            [6.5, 7],
-          ],
-        };
+          }
       } 
+    }
 
     componentDidMount(){
-        Data.getChartForSymbolAtInterval("AAPL", "5y").then(console.log)
+        Data.getChartForSymbolAtInterval("AAPL", "5y")
+        .then(data => this.restructureChartData(data)); 
+    }
+
+    restructureChartData = (data) =>{
+        // console.log(data)
+        let timeAndPrice = data.map(point => [new Date(point.date), point.close]) 
+        let dataObject ={
+            
+                "chartType": "LineChart",
+                "columns": [
+                  {
+                    "label": "Time",
+                    "type": "date"
+                  },
+                  {
+                    "label": "Price",
+                    "type": "number"
+                  }
+                ],
+                "rows": [
+                    ...timeAndPrice
+                ],
+                "options": {
+                  "legend": true,
+                  "hAxis": {
+                    "title": "Time"
+                  },
+                  "vAxis": {
+                    "title": "Price"
+                  }
+                },
+                "width": "100%"
+              }
+        
+        this.setState({data: dataObject});
+        // console.log(timeAndPrice)
     }
 
     render(){
         return(
             <Container>
                 <div>Chart about all the shit</div>
-                <Chart
-                    chartType="LineChart"
-                    data={this.state.data}
-                    options={this.state.options}
-                    graph_id="LineChart"
-                    width="100%"
-                    height="500px"
-                    legend_toggle
-                />
+                {
+                    this.state.data ? 
+                    <Chart
+                        chartType="LineChart"
+                        rows={this.state.data.rows}
+                        columns={this.state.data.columns}
+                        graph_id="LineChart"
+                        width="100%"
+                        height="500px"
+                        legend_toggle
+                    />
+                    :
+                    <h1>Loading</h1>
+
+                }
             </Container>
         )
     }
