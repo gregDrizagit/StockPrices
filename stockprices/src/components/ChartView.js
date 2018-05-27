@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {Container} from 'semantic-ui-react';
 import { Chart } from 'react-google-charts';
-import {Button, Grid} from 'semantic-ui-react'
+import {Button, Grid, Label, Table} from 'semantic-ui-react'
 import {addBook} from '../actions'
 import Data from '../api/data';
 
@@ -27,39 +27,49 @@ class ChartView extends React.Component{
         this.getSymbolData(); 
     }
 
+    // <Table.Header>
+    //   <Table.Row>
+    //     <Table.HeaderCell>Header</Table.HeaderCell>
+    //     <Table.HeaderCell>Header</Table.HeaderCell>
+    //     <Table.HeaderCell>Header</Table.HeaderCell>
+    //   </Table.Row>
+    // </Table.Header>
+
     renderDataTable = (data) => {
         return (
-            <table className="data-table">
-                <caption>{data.companyName} - {data.symbol}</caption>
-                <tr>
-                    <th>Latest Price</th>
-                    <td>${data.latestPrice}</td>
-                </tr>
-                <tr>
-                    <th>Volume</th>
-                    <td>{data.latestVolume.toLocaleString('en', {useGrouping:true})}</td>
-                </tr>
-                <tr>
-                    <th>Avg Daily Volume</th>
-                    <td>{data.avgTotalVolume.toLocaleString('en', {useGrouping:true})}</td>
-                </tr>
-                <tr>
-                    <th>Previous Close</th>
-                    <td>{data.latestVolume.toLocaleString('en', {useGrouping:true})}</td>
-                </tr>
-                <tr>
-                    <th>52 Week Range</th>
-                    <td>{data.week52Low}  - {data.week52High}</td>
-                </tr>
-                <tr>
-                    <th>Market Cap</th>
-                    <td>${data.marketCap.toLocaleString('en', {useGrouping:true})}</td>
-                </tr>
-                <tr>
-                    <th>P/E Ratio</th>
-                    <td>{data.peRatio}</td>
-                </tr>
-            </table>
+            <Table celled>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>Latest Price</Table.Cell>
+                <Table.Cell>${data.latestPrice}</Table.Cell>
+                
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Volume</Table.Cell>
+                <Table.Cell>{data.latestVolume.toLocaleString('en', {useGrouping:true})}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Avg Daily Volume</Table.Cell>
+                <Table.Cell>{data.avgTotalVolume.toLocaleString('en', {useGrouping:true})}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Previous Close</Table.Cell>
+                <Table.Cell>{data.previousClose}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>52 Week Range</Table.Cell>
+                <Table.Cell>{data.week52Low}  - {data.week52High}</Table.Cell>
+              </Table.Row>
+              <Table.Row >
+                <Table.Cell>Market Cap</Table.Cell>
+                <Table.Cell>${data.marketCap.toLocaleString('en', {useGrouping:true})}</Table.Cell>
+              </Table.Row>
+              <Table.Row >
+                <Table.Cell>P/E Ratio</Table.Cell>
+                <Table.Cell>{data.peRatio}</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
         )
     }
 
@@ -135,15 +145,15 @@ class ChartView extends React.Component{
 
                         }
                     </Grid.Column>
-                    <Grid.Column width={6}>
+                    <Grid.Column className={'data-column'} width={6}>
+                    <div>
                     {
                         this.props.book ?
-                            <div>
-                                {this.renderDataTable(this.props.book.quote)}
-                            </div>
+                            this.renderDataTable(this.props.book.quote)
                         :
                             <h1>Loading</h1>
                     }
+                    </div>
                     </Grid.Column>
                 </Grid>
         )

@@ -71,8 +71,10 @@ class Home extends React.Component{
                                 <h2>{this.props.delayedQuote.delayedPrice} USD {this.renderChange(this.props.book)}</h2>
                                 <h4>{company.exchange} - {company.industry}</h4>
                                 <h3>CEO: {company.CEO}</h3>
-
+                            
                                 <h5>{company.description}</h5>
+
+                                <Icon name={"chevron right"} onClick={() => this.props.history.push('/chart')} />
                                
                             </div>
                             :
@@ -92,7 +94,7 @@ class Home extends React.Component{
                     <div className={"news-container"}>
                         {
                             this.state.news ? 
-                                <Card.Group itemsPerRow={1}>
+                                <Card.Group itemsPerRow={2}>
                                     {this.renderNewsCards(this.state.news)}
                                 </Card.Group>
                             :
