@@ -1,13 +1,15 @@
 import React from 'react';
 import SearchCompany from './SearchCompany'; 
+import NewsCard from './NewsCard'
 import Companies from '../api/companies';
 import {connect} from 'react-redux';
-import {Segment, Container, Header, Grid, Icon} from 'semantic-ui-react';
+import {Segment, Container, Header, Grid, Card, Icon} from 'semantic-ui-react';
 import {addSymbols} from '../actions';
 
 
 class Home extends React.Component{
 
+    state = {};
 
     componentDidMount(){
         Companies.getAllSymbols().then(symbols =>{ 
@@ -16,7 +18,23 @@ class Home extends React.Component{
             this.setState({symbols: mappedSymbols}) 
         });
 
-           
+        Companies.getMarketNews().then(news => this.setState({news: news})); 
+    }
+    
+    renderChange = (data) => {
+        console.log(data.extendedChange)
+        let change = ''; 
+        switch(Math.sign(data.extendedChange)){
+            case 1:
+            console.log("green", data.extendedChange)
+                break;
+            case -1: 
+            console.log("red", data.extendedChange)
+                break;
+            default:
+                console.log("default")
+        }
+
     }
 
     unpackComapnyData = (data) => {
@@ -27,6 +45,11 @@ class Home extends React.Component{
             }
         })
         return data 
+    }
+
+    renderNewsCards = () => {
+
+        return this.state.news.map(article => <NewsCard article={article} />)
     }
 
     renderPeers = (peers) => {
@@ -46,8 +69,7 @@ class Home extends React.Component{
                             <div className={"company-info"}>
 
                                 <h1>{company.companyName} ({company.symbol})</h1>
-                                <h2>{this.props.delayedQuote.delayedPrice} USD</h2>
-                                <h3>{this.props.book.extendedChange}</h3>
+                                <h2>{this.props.delayedQuote.delayedPrice} USD {this.renderChange(this.props.book)}</h2>
                                 <h4>{company.exchange} - {company.industry}</h4>
                                 <h3>CEO: {company.CEO}</h3>
 
@@ -59,7 +81,7 @@ class Home extends React.Component{
                                 <h1>Market View</h1>
                                 <h4>An app by Greg Driza </h4>
                                 <h3>View the code on <a href="https://github.com/gregDrizagit/StockPrices">GitHub</a></h3>
-                                <h5>Implemented with IEX Stocks API, React.Js / Redux, and Semantic-UI</h5>
+                                <h5>Implemented with IEX Stocks API, React.js / Redux, Google Charts, and Semantic-UI</h5>
 
                                 <h2>Search for a company to view stock data.</h2>
                             </div>
@@ -67,6 +89,17 @@ class Home extends React.Component{
                          <div className={"search-bar"}>
                                 <SearchCompany />
                          </div>
+                    </div>
+                    <div className={"news-container"}>
+                        {
+                            this.state.news ? 
+                                <Card.Group itemsPerRow={1}>
+                                    {this.renderNewsCards(this.state.news)}
+                                </Card.Group>
+                            :
+                                null
+
+                        }
                     </div>
                                     
                 </div>

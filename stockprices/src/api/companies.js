@@ -18,6 +18,10 @@ static getPeersForSymbol(symbol){
     return fetch(requestPrefix + `/stock/${symbol}/peers`).then(resp => resp.json())
 }
 
+static getMarketNews(){
+    return fetch(requestPrefix + '/stock/market/news/last/10').then(resp => resp.json())
+}
+
 }
 
 export default Companies; 
