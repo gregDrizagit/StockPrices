@@ -20,7 +20,7 @@ class Data{
         return fetch(requestPrefix + `/stock/${symbol}/stats`).then(resp => resp.json())
     }
 
-    static getFinancialsforSymbol(symbol){
+    static getFinancialsForSymbol(symbol){
         return fetch(requestPrefix + `/stock/${symbol}/financials`).then(resp => resp.json())
     }
     

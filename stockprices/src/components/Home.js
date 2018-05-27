@@ -74,7 +74,7 @@ class Home extends React.Component{
                             
                                 <h5>{company.description}</h5>
 
-                                <Icon name={"chevron right"} onClick={() => this.props.history.push('/chart')} />
+                                <h2>See More Data: </h2><Icon name={"chevron right"} onClick={() => this.props.history.push('/chart')} />
                                
                             </div>
                             :

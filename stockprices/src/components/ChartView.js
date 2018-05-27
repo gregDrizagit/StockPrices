@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {Container} from 'semantic-ui-react';
 import { Chart } from 'react-google-charts';
-import {Button, Grid, Label, Table} from 'semantic-ui-react'
+import {Button, Grid, Label, Table, Icon, Segment} from 'semantic-ui-react'
 import {addBook} from '../actions'
 import Data from '../api/data';
 
@@ -13,9 +13,8 @@ class ChartView extends React.Component{
         super(props);
         this.state = {
           options: {
-            title: 'Apple Prices',
-            hAxis: { title: 'Time' },
-            vAxis: { title: 'Price' },
+            hAxis: {  },
+            vAxis: {  },
             legend: 'none',
             colors:['green']
           },
@@ -27,16 +26,10 @@ class ChartView extends React.Component{
         this.getSymbolData(); 
     }
 
-    // <Table.Header>
-    //   <Table.Row>
-    //     <Table.HeaderCell>Header</Table.HeaderCell>
-    //     <Table.HeaderCell>Header</Table.HeaderCell>
-    //     <Table.HeaderCell>Header</Table.HeaderCell>
-    //   </Table.Row>
-    // </Table.Header>
 
     renderDataTable = (data) => {
         return (
+            <div className={"data-table"}>
             <Table celled>
             <Table.Body>
               <Table.Row>
@@ -70,6 +63,7 @@ class ChartView extends React.Component{
               </Table.Row>
             </Table.Body>
           </Table>
+          </div>
         )
     }
 
@@ -113,11 +107,15 @@ class ChartView extends React.Component{
     render(){
         const company = this.props.companyData
         return(
+            <div className='chart-view-body'>
                 <Grid columns={2} divided>
-                    <Grid.Column width={10}>
+                    <Grid.Column stretched width={10}>
+                    <Icon name="chevron right" onClick={() => this.props.history.push('/financials')}/>
                         {
                             this.state.data ? 
+                           
                             <div className={'chart-column'}>
+                              
                                 <Chart
                                     chartType="LineChart"
                                     rows={this.state.data.rows}
@@ -125,10 +123,11 @@ class ChartView extends React.Component{
                                     options={this.state.options}
                                     graph_id="LineChart"
                                     width="100%"
-                                    height="500px"
+                                    height='95vh'
                                     legend_toggle
                                 />
-                                <div style={{textAlign: "center"}}>
+
+                                 <div style={{textAlign: "center"}}>
                                     <Button.Group basic >
                                         <Button onClick={() => this.handleIntervalButtons('ytd')} content="YTD" />
                                         <Button onClick={() => this.handleIntervalButtons('1m')} content="1M" />
@@ -139,23 +138,22 @@ class ChartView extends React.Component{
                                         <Button onClick={() => this.handleIntervalButtons('5y')} content="5Y" />
                                     </Button.Group>
                                 </div>
-                            </div>
+                            </div>                           
                             :
                             <h1>Loading</h1>
 
                         }
                     </Grid.Column>
-                    <Grid.Column className={'data-column'} width={6}>
-                    <div>
+                    <Grid.Column stretched className={'data-column'} width={6}>
                     {
                         this.props.book ?
                             this.renderDataTable(this.props.book.quote)
                         :
                             <h1>Loading</h1>
                     }
-                    </div>
                     </Grid.Column>
                 </Grid>
+            </div>
         )
     }
 }
