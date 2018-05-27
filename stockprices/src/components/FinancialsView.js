@@ -42,19 +42,20 @@ class FinancialsView extends React.Component{
 
 
             let cashFlowKeys = Object.keys(date).slice(17, 20);
+            cashFlowObjects[date.reportDate] = {}; 
             cashFlowKeys.forEach(key => {
-                let cashFlowParams = {}; 
-                cashFlowParams[key] = date[key]
-                Object.assign(cashFlowObjects, cashFlowParams)
+                let cashFlowParam = {};
+                cashFlowParam[key] = date[key];
+                Object.assign(cashFlowObjects[date.reportDate], cashFlowParam)
             });
 
         })
 
         return(
             <div>
-                <FinancialsTable data={incomeStatementObjects}/>
-                <FinancialsTable data={balanceSheetObjects}/>
-                <FinancialsTable data={cashFlowObjects}/>
+                <FinancialsTable title={"Income Statement"} data={incomeStatementObjects}/>
+                <FinancialsTable title={"Balance Sheet"} data={balanceSheetObjects}/>
+                <FinancialsTable title={"Cash Flow"} data={cashFlowObjects}/>
 
             </div>  
 
