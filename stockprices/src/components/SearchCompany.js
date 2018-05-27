@@ -1,7 +1,9 @@
 import React from 'react';
 import Companies from '../api/companies'
+import Data from '../api/data'
+
 import {connect} from 'react-redux'
-import {addSymbols, addStats, selectSymbol, delayedQuote, peerSymbols} from '../actions'
+import {addSymbols, addBook, addStats, selectSymbol, delayedQuote, peerSymbols} from '../actions'
 import {Segment, Container, Dropdown } from 'semantic-ui-react'
 
 class SearchCompany extends React.Component{
@@ -26,9 +28,8 @@ class SearchCompany extends React.Component{
             this.props.dispatch(peerSymbols(peers))
         })
 
-        // Companies.getStatsForSymbols(value).then(stats => {
-        //     this.props.dispatch(addStats(stats))
-        // })
+        Data.getBookForSymbol(value)
+        .then(book => this.props.dispatch(addBook(book))) 
 
     }
 
@@ -38,7 +39,7 @@ class SearchCompany extends React.Component{
 
     render(){
         return(
-            <Container>
+            <div className={"search-bar"}>
                 {
                     this.props.symbols.length > 0 ?
 
@@ -55,7 +56,7 @@ class SearchCompany extends React.Component{
                     null
                 }
 
-            </Container>
+            </div>
         )
     }
 }

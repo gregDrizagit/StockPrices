@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Container} from 'semantic-ui-react';
 import { Chart } from 'react-google-charts';
 import {Button, Grid} from 'semantic-ui-react'
-
+import {addBook} from '../actions'
 import Data from '../api/data';
 
 
@@ -27,9 +27,50 @@ class ChartView extends React.Component{
         this.getSymbolData(); 
     }
 
-    getSymbolData = () =>{
-        Data.getChartForSymbolAtInterval("AAPL", this.state.interval)
+    renderDataTable = (data) => {
+        console.log(data)
+        return (
+            <table className="data-table">
+                <caption>{data.companyName} - {data.symbol}</caption>
+                <tr>
+                    <th>Latest Price</th>
+                    <td>${data.latestPrice}</td>
+                </tr>
+                <tr>
+                    <th>Volume</th>
+                    <td>{data.latestVolume.toLocaleString('en', {useGrouping:true})}</td>
+                </tr>
+                <tr>
+                    <th>Avg Daily Volume</th>
+                    <td>{data.avgTotalVolume.toLocaleString('en', {useGrouping:true})}</td>
+                </tr>
+                <tr>
+                    <th>Previous Close</th>
+                    <td>{data.latestVolume.toLocaleString('en', {useGrouping:true})}</td>
+                </tr>
+                <tr>
+                    <th>52 Week Range</th>
+                    <td>{data.week52Low}  - {data.week52High}</td>
+                </tr>
+                <tr>
+                    <th>Market Cap</th>
+                    <td>${data.marketCap.toLocaleString('en', {useGrouping:true})}</td>
+                </tr>
+                <tr>
+                    <th>P/E Ratio</th>
+                    <td>{data.peRatio}</td>
+                </tr>
+            </table>
+        )
+    }
+
+    getSymbolData = () => {
+        const symbol = this.props.companyData.symbol;
+        Data.getChartForSymbolAtInterval(symbol, this.state.interval)
         .then(data => this.restructureChartData(data)); 
+
+        Data.getBookForSymbol(symbol)
+        .then(book => this.props.dispatch(addBook(book)))
     }
 
     handleIntervalButtons = (interval) => {
@@ -38,7 +79,7 @@ class ChartView extends React.Component{
 
     restructureChartData = (data) =>{
         let timeAndPrice = data.map(point => [new Date(point.date), point.close]) 
-        let dataObject ={
+        let dataObject = {
             
                 "chartType": "LineChart",
                 "columns": [
@@ -61,12 +102,13 @@ class ChartView extends React.Component{
     }
 
     render(){
+        const company = this.props.companyData
         return(
                 <Grid columns={2} divided>
                     <Grid.Column width={10}>
                         {
                             this.state.data ? 
-                            <div>
+                            <div className={'chart-column'}>
                                 <Chart
                                     chartType="LineChart"
                                     rows={this.state.data.rows}
@@ -74,19 +116,19 @@ class ChartView extends React.Component{
                                     options={this.state.options}
                                     graph_id="LineChart"
                                     width="100%"
-                                    height="600px"
+                                    height="500px"
                                     legend_toggle
                                 />
                                 <div style={{textAlign: "center"}}>
-                                <Button.Group basic >
-                                    <Button onClick={() => this.handleIntervalButtons('ytd')} content="YTD" />
-                                    <Button onClick={() => this.handleIntervalButtons('1m')} content="1M" />
-                                    <Button onClick={() => this.handleIntervalButtons('3m')} content="3M" />
-                                    <Button onClick={() => this.handleIntervalButtons('6m')} content="6M" />
-                                    <Button onClick={() => this.handleIntervalButtons('1y')} content="1Y" />
-                                    <Button onClick={() => this.handleIntervalButtons('2y')} content="2Y" />
-                                    <Button onClick={() => this.handleIntervalButtons('5y')} content="5Y" />
-                                </Button.Group>
+                                    <Button.Group basic >
+                                        <Button onClick={() => this.handleIntervalButtons('ytd')} content="YTD" />
+                                        <Button onClick={() => this.handleIntervalButtons('1m')} content="1M" />
+                                        <Button onClick={() => this.handleIntervalButtons('3m')} content="3M" />
+                                        <Button onClick={() => this.handleIntervalButtons('6m')} content="6M" />
+                                        <Button onClick={() => this.handleIntervalButtons('1y')} content="1Y" />
+                                        <Button onClick={() => this.handleIntervalButtons('2y')} content="2Y" />
+                                        <Button onClick={() => this.handleIntervalButtons('5y')} content="5Y" />
+                                    </Button.Group>
                                 </div>
                             </div>
                             :
@@ -94,10 +136,15 @@ class ChartView extends React.Component{
 
                         }
                     </Grid.Column>
-                    <Grid.Column style={{backgroundColor:'#ebebe0'}} width={6}>
-                        <div>
-                            <h1>data</h1>
-                        </div>
+                    <Grid.Column width={6}>
+                    {
+                        this.props.book ?
+                            <div>
+                                {this.renderDataTable(this.props.book.quote)}
+                            </div>
+                        :
+                            <h1>Loading</h1>
+                    }
                     </Grid.Column>
                 </Grid>
         )
@@ -109,7 +156,8 @@ const mapStateToProps = (state) => {
              companyData: state.symbol, 
              delayedQuote: state.quote,
              peerSymbols: state.peerSymbols,
-             companyStats: state.companyStats
+             companyStats: state.companyStats,
+             book: state.book
              }
   }
 

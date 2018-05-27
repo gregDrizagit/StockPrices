@@ -19,6 +19,11 @@ export const peerSymbols = peerSymbols => ({
     peerSymbols: peerSymbols 
 })
 export const addStats = stats => ({
-    type: 'PEER_SYMBOLS',
+    type: 'ADD_STATS',
     companyStats: stats 
+})
+
+export const addBook = book => ({
+    type: 'ADD_BOOK',
+    book: book 
 })

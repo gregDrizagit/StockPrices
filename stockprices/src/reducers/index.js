@@ -2,9 +2,10 @@ const stockData = (state = {
     //default values
     symbols: [], 
     symbol: '', 
-    quote: {}, 
+    quote: null, 
     peerSymbols: [], 
-    companyStats: []
+    companyStats: [], 
+    book: null
 }
 , action) => {
     switch (action.type) {
@@ -32,6 +33,11 @@ const stockData = (state = {
         return {
           ...state,
             companyStats: action.companyStats
+        }
+        case 'ADD_BOOK':
+        return {
+          ...state,
+            book: action.book
         }
 
       default:
