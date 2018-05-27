@@ -12,7 +12,7 @@ class SearchCompany extends React.Component{
     state = {value: '', symbols: []};
 
 
-    handleChange = (e, {value}) => { 
+    handleSelectionChange = (e, {value}) => { 
 
         this.setState({value})
         
@@ -33,9 +33,17 @@ class SearchCompany extends React.Component{
 
     }
 
+    handleSearchChange = (e) => {
+        this.setState({value: e.target.value})
+        // console.log(this.props.symbols)
+        let filteredSymbols = this.props.symbols.filter(sym => sym.text.includes(e.target.value));
+        this.setState({symbols: filteredSymbols}) 
+    }
+
     selectSymbol = (e, {value}) => {
         this.setState({value: value})
     }
+
 
     render(){
         return(
@@ -48,8 +56,9 @@ class SearchCompany extends React.Component{
                             search 
                             selection
                             value={this.state.value}
-                            onChange={this.handleChange}
-                            options={this.props.symbols} 
+                            onSearchChange={this.handleSearchChange}
+                            onChange={this.handleSelectionChange}
+                            options={this.state.symbols} 
 
                             />
                     :
@@ -61,8 +70,9 @@ class SearchCompany extends React.Component{
     }
 }
 
+      
+
 const mapStateToProps = (state) => {
     return { symbols: state.symbols, selectedSymbol: state.symbol }
   }
-//   connect(mapStateToProps)(
 export default connect(mapStateToProps)(SearchCompany);

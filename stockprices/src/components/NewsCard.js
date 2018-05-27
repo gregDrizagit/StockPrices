@@ -5,13 +5,16 @@ const NewsCard = (props) => {
     console.log(props)
     const article = props.article; 
     return(
-        <Card>
-            <Card.Content header={article.headline} />
-            <Card.Content description={article.summary} />
-            <Card.Content extra>
-                Date: {new Date(article.datetime).toLocaleString()}
-                Source: {article.source} 
+        <Card href={article.url}>
+            <Card.Header>
+                <h1>{article.headline}</h1>
+                <Card.Meta>{new Date(article.datetime).toLocaleString()}</Card.Meta>
+            </Card.Header> 
 
+            <Card.Content description={article.summary} />
+
+            <Card.Content extra>
+                Source: {article.source} 
             </Card.Content>
         </Card>
     )
