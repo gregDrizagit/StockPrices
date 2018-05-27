@@ -28,7 +28,6 @@ class ChartView extends React.Component{
     }
 
     renderDataTable = (data) => {
-        console.log(data)
         return (
             <table className="data-table">
                 <caption>{data.companyName} - {data.symbol}</caption>

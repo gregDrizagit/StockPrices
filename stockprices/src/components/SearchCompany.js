@@ -33,11 +33,19 @@ class SearchCompany extends React.Component{
 
     }
 
+
+
     handleSearchChange = (e) => {
         this.setState({value: e.target.value})
-        // console.log(this.props.symbols)
+
         let filteredSymbols = this.props.symbols.filter(sym => sym.text.includes(e.target.value));
-        this.setState({symbols: filteredSymbols}) 
+
+        if(e.target.value.length <= 2) {
+            this.setState({symbols: filteredSymbols.slice(0, 300)})
+        }else{
+            this.setState({symbols: filteredSymbols}) 
+
+        }
     }
 
     selectSymbol = (e, {value}) => {
@@ -55,6 +63,7 @@ class SearchCompany extends React.Component{
                             fluid 
                             search 
                             selection
+                            minCharacters={2}
                             value={this.state.value}
                             onSearchChange={this.handleSearchChange}
                             onChange={this.handleSelectionChange}

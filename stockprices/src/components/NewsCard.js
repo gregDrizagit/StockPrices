@@ -2,7 +2,6 @@ import React from 'react';
 import {Card} from 'semantic-ui-react';
 
 const NewsCard = (props) => {
-    console.log(props)
     const article = props.article; 
     return(
         <Card href={article.url}>

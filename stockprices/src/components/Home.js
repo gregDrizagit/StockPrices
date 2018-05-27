@@ -15,7 +15,6 @@ class Home extends React.Component{
         Companies.getAllSymbols().then(symbols =>{ 
             let mappedSymbols = symbols.map(item => {return {key: item.symbol, value:item.symbol, text:item.symbol+ " - " + item.name }});
             this.props.dispatch(addSymbols(mappedSymbols)); 
-            this.setState({symbols: mappedSymbols}) 
         });
 
         Companies.getMarketNews().then(news => this.setState({news: news})); 
