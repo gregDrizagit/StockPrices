@@ -7,7 +7,7 @@ import {Segment, Container, Header, Grid, Card, Icon} from 'semantic-ui-react';
 import {addSymbols} from '../actions';
 
 
-class Home extends React.Component{
+class HomeView extends React.Component{
 
     state = {};
 
@@ -119,4 +119,4 @@ const mapStateToProps = (state) => {
             }
   }
 
-export default connect(mapStateToProps)(Home); 
+export default connect(mapStateToProps)(HomeView); 
