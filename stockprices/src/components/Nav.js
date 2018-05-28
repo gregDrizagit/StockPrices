@@ -32,13 +32,13 @@ class Nav extends React.Component{
 
                 return(
                 <div className={'market-overview-element'}>
-                    <Header as='h4' textAlign='center' floated="right">
+                    <Header as='h2' textAlign='center' floated="right">
                         S&P 500: {this.renderChange(this.state.data.SPY)}
                     </Header>
-                    <Header as='h4' textAlign='center' floated="right">
+                    <Header as='h2' textAlign='center' floated="right">
                         NASDAQ: {this.renderChange(this.state.data.ONEQ)}
                     </Header>
-                    <Header as='h4' textAlign='center' floated="right">
+                    <Header as='h2' textAlign='center' floated="right">
                     Dow Jones: {this.renderChange(this.state.data.DIA)}
                     </Header>
                 </div>

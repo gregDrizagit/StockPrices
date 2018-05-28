@@ -16,6 +16,7 @@ body {
 .data-column{
   background-color: #e5e5e5; 
   border-left: 1px solid green; 
+  text-align:center;
 }
 
 .chart-column{
@@ -25,7 +26,8 @@ body {
 .chart-view-body{
 }
 
-.losers-gainers{
+.most-active{
+  text-align: 'center';
   padding: 80px;
   padding-bottom: 10px; 
 }
@@ -86,10 +88,23 @@ body {
 
 .market-overview-element{
   position: absolute;
-  top: 0px;
+  top: 5px;
   right: 0px;
   padding: 20px;
 }
+
+.financials-button{
+  padding-top: 20px;
+}
+
+.market-overview-element h2{
+  font-size: 3vw; 
+
+}
 .nav {
   border-bottom: 1px solid green;
+}
+
+.table-view{
+  padding: 50px;
 }

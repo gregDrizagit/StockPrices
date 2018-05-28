@@ -21,11 +21,10 @@ class MostActive extends React.Component{
         let mostActive = this.props.mostActive.filter(company =>{
             return company.extendedChange !== 0 && company.extendedChangePercent !== 0
         }).map(mostActive => {
+            console.log('mostActive', mostActive)
             return(
-                <Segment>
-                    <Header as='h3' textAlign='justified'>
-                        {mostActive.symbol} - {mostActive.companyName} - {mostActive.close} {this.renderChange(mostActive.extendedChange, mostActive.extendedChangePercent)}
-                    </Header>
+                <Segment textAlign="right">
+                    {mostActive.symbol}
                 </Segment>
             ) 
         })

@@ -106,7 +106,6 @@ class ChartView extends React.Component{
 
     render(){
         const company = this.props.companyData
-        console.log(company)
         return(
             <div className='chart-view-body'>
                 <Grid columns={2} divided>
@@ -125,7 +124,7 @@ class ChartView extends React.Component{
                                     options={this.state.options}
                                     graph_id="LineChart"
                                     width="100%"
-                                    height='95vh'
+                                    height='85vh'
                                     legend_toggle
                                 />
 
@@ -146,7 +145,8 @@ class ChartView extends React.Component{
 
                         }
                     </Grid.Column>
-                    <Grid.Column stretched className={'data-column'} width={6}>
+                    <Grid.Column className={'data-column'} width={6}>
+                        <Button className={'financials-button'} color="yellow" content="View Financial Tables" onClick={() => this.props.history.push('/financials')} />
 
                     {
                         this.props.book ?

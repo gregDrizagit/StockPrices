@@ -1,6 +1,6 @@
 import React from 'react'; 
 import {connect} from 'react-redux';
-import {Grid, Table, Container, Header} from 'semantic-ui-react';
+import {Grid, Table, Container, Divider, Header} from 'semantic-ui-react';
 import Data from '../api/data';
 import FinancialsTable from './FinancialsTable';
 
@@ -18,9 +18,14 @@ class FinancialsView extends React.Component{
 
         return(
             <Container>
-                <FinancialsTable table={"Income Statement"} data={this.state.data}/>
-                <FinancialsTable table={"Balance Sheet"} data={this.state.data}/>
-                <FinancialsTable table={"Cash Flow"} data={this.state.data}/>
+                <h1>Income Sheet</h1>
+                <div className={'financials-table'}>
+                    <FinancialsTable color={'green'} table={"Income Statement"} data={this.state.data}/>
+                </div>
+                <h1>Balance Sheet</h1>
+                <FinancialsTable color={'yellow'} table={"Balance Sheet"} data={this.state.data}/>
+                <h1>Cash Flow</h1>
+                <FinancialsTable color={'green'} table={"Cash Flow"} data={this.state.data}/>
             </Container>  
         )
     }
@@ -30,8 +35,8 @@ class FinancialsView extends React.Component{
 
     render(){
         return(
-            <div>
-                <h1>Financials</h1>
+            <div className={'table-view'}>
+                <h1>{this.props.companyData.companyName} Financials </h1>
                 {
                     this.state.data ?
                         this.renderFinancialsTable()

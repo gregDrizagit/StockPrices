@@ -1,5 +1,6 @@
 import React from 'react';
 import FinancialsTableColumn from './FinancialsTableColumn';
+import {connect} from 'react-redux';
 import {Table, Header} from 'semantic-ui-react';
 
 class FinancialsTable extends React.Component{
@@ -32,16 +33,36 @@ class FinancialsTable extends React.Component{
                             </Header>
                         </Table.HeaderCell>
                         <Table.Cell>
-                            {this.props.data.financials[0][col]}
+                            {
+                                this.props.data.financials[0][col] ?
+                                    this.props.data.financials[0][col].toLocaleString('en', {useGrouping:true})
+                                :
+                                null
+                            }
                         </Table.Cell>
                         <Table.Cell>
-                            {this.props.data.financials[1][col]}
+                            {
+                                this.props.data.financials[1][col] ?
+                                    this.props.data.financials[1][col].toLocaleString('en', {useGrouping:true})
+                                :
+                                null
+                            }
                         </Table.Cell>
                         <Table.Cell>
-                            {this.props.data.financials[2][col]}
+                            {
+                                this.props.data.financials[2][col] ?
+                                    this.props.data.financials[2][col].toLocaleString('en', {useGrouping:true})
+                                :
+                                null
+                            }       
                         </Table.Cell>
                         <Table.Cell>
-                            {this.props.data.financials[3][col]}
+                            {
+                                this.props.data.financials[3][col] ?
+                                    this.props.data.financials[3][col].toLocaleString('en', {useGrouping:true})
+                                :
+                                null
+                            }
                         </Table.Cell>
                     </Table.Row>
                 )
@@ -98,15 +119,14 @@ class FinancialsTable extends React.Component{
     }
 
     render(){
+        console.log("table", this.props)
         return(
-            <Table basic='very' selectable celled style={{tableLayout: 'fixed'}}>
+            <Table color={this.props.color} selectable celled style={{tableLayout: 'fixed'}}>
                 <Table.Header>
                     <Table.Row>
                     <Table.HeaderCell>
                             <Header as='h2'>
-                                <Header.Content>
-                                    {this.props.title}
-                                </Header.Content>
+                                {this.props.title}
                             </Header>
                     </Table.HeaderCell>
                     <Table.HeaderCell>
@@ -153,9 +173,16 @@ class FinancialsTable extends React.Component{
 
 
 
+const mapStateToProps = (state) => {
+    return { symbols: state.symbols, 
+             companyData: state.symbol, 
+             delayedQuote: state.quote,
+             peerSymbols: state.peerSymbols,
+             companyStats: state.companyStats,
+             book: state.book
+            }
+  }
 
     
-
-
-export default FinancialsTable; 
+export default connect(mapStateToProps)(FinancialsTable); 
 

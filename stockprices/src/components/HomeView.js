@@ -6,7 +6,7 @@ import Nav from './Nav';
 import Companies from '../api/companies';
 import Data from '../api/data'; 
 import {connect} from 'react-redux';
-import {Segment, Container, Header, Grid, Card, Icon} from 'semantic-ui-react';
+import {Segment, Container, Button, Header, Grid, Card, Icon} from 'semantic-ui-react';
 import {addSymbols} from '../actions';
 
 
@@ -70,7 +70,6 @@ class HomeView extends React.Component{
             return(
                 <div>
                     <Nav />
-
                     <div className={"company-selection"}>
 
                         {
@@ -85,13 +84,12 @@ class HomeView extends React.Component{
                             
                                 <h5>{company.description}</h5>
 
-                                <h3>See More Data: </h3><Icon size='large' name={"chevron right"} onClick={() => this.props.history.push('/chart')} />
-                               
+                               <Button color="yellow" content="See More Data" onClick={() => this.props.history.push('/chart')} />
                             </div>
                             :
                             <div className={"company-info"}>
 
-                                <h1>Market View</h1>
+                                <h1>Stock Prices</h1>
                                 <h2>An app by Greg Driza </h2>
                                 <h3>View the code on <a href="https://github.com/gregDrizagit/StockPrices">GitHub</a></h3>
                                 <h4>Implemented with IEX Stocks API, React.js / Redux, Google Charts, and Semantic-UI</h4>
@@ -103,7 +101,8 @@ class HomeView extends React.Component{
                                 <SearchCompany />
                          </div>
                     </div>
-                    <div className={"losers-gainers"}>
+                    <div className={'most-active'}>
+                        <h3>Most Active Stocks</h3>
                     {
                         this.state.mostActive ?
                             <MostActive mostActive={this.state.mostActive} />
@@ -113,6 +112,8 @@ class HomeView extends React.Component{
                     }
                     </div>
                     <div className={"news-container"}>
+                        <h3>News</h3>
+
                         {
                             this.state.news ? 
                                 <Card.Group itemsPerRow={2}>
