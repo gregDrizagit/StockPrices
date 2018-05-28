@@ -146,11 +146,17 @@ class ChartView extends React.Component{
                         }
                     </Grid.Column>
                     <Grid.Column className={'data-column'} width={6}>
-                        <Button className={'financials-button'} color="yellow" content="View Financial Tables" onClick={() => this.props.history.push('/financials')} />
+                        
 
                     {
                         this.props.book ?
+                        <div>
                             this.renderDataTable(this.props.book.quote)
+                            <Button className={'financials-button'} 
+                                color="yellow" 
+                                content="View Financial Tables" 
+                                onClick={() => this.props.history.push('/financials')} />
+                        </div>
                         :
                             <h1>Loading</h1>
                     }

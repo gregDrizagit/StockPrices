@@ -55,7 +55,6 @@ body {
 .company-info{
   position: relative; 
   font-family: Arial, Helvetica, sans-serif;
-
   padding: 80px;
   left:70px;
 }
@@ -94,7 +93,7 @@ body {
 }
 
 .financials-button{
-  padding-top: 20px;
+  margin-top: 20px;
 }
 
 .market-overview-element h2{
