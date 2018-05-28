@@ -106,16 +106,18 @@ class ChartView extends React.Component{
 
     render(){
         const company = this.props.companyData
+        console.log(company)
         return(
             <div className='chart-view-body'>
                 <Grid columns={2} divided>
                     <Grid.Column stretched width={10}>
-                    <Icon name="chevron right" onClick={() => this.props.history.push('/financials')}/>
+                    <div className="chart-view-header">
+                        <h2>{this.props.companyData.companyName} Stock Prices - {this.state.interval}</h2>
+                    </div>
                         {
                             this.state.data ? 
-                           
+
                             <div className={'chart-column'}>
-                              
                                 <Chart
                                     chartType="LineChart"
                                     rows={this.state.data.rows}
@@ -145,6 +147,8 @@ class ChartView extends React.Component{
                         }
                     </Grid.Column>
                     <Grid.Column stretched className={'data-column'} width={6}>
+                    <h3>View Financial Tables: </h3><Icon size='large' name="chevron right" onClick={() => this.props.history.push('/financials')}/>
+
                     {
                         this.props.book ?
                             this.renderDataTable(this.props.book.quote)

@@ -21,14 +21,14 @@ class HomeView extends React.Component{
     }
     
     renderChange = (data) => {
-        console.log(data.extendedChange)
+        console.log(data)
         let change = ''; 
-        switch(Math.sign(data.extendedChange)){
+        switch(Math.sign(data.quote.extendedChange)){
             case 1:
-            console.log("green", data.extendedChange)
+                return <h2 style={{color:'green'}}>+{data.quote.extendedChange} ({data.quote.extendedChangePercent.toFixed(5)}%) </h2>
                 break;
             case -1: 
-            console.log("red", data.extendedChange)
+                return <h2 style={{color:'red'}}>-{data.quote.extendedChange} ({data.quote.extendedChangePercent.toFixed(5)}%) </h2>
                 break;
             default:
                 console.log("default")
@@ -80,9 +80,9 @@ class HomeView extends React.Component{
                             :
                             <div className={"company-info"}>
                                 <h1>Market View</h1>
-                                <h4>An app by Greg Driza </h4>
+                                <h2>An app by Greg Driza </h2>
                                 <h3>View the code on <a href="https://github.com/gregDrizagit/StockPrices">GitHub</a></h3>
-                                <h5>Implemented with IEX Stocks API, React.js / Redux, Google Charts, and Semantic-UI</h5>
+                                <h4>Implemented with IEX Stocks API, React.js / Redux, Google Charts, and Semantic-UI</h4>
 
                                 <h2>Search for a company to view stock data.</h2>
                             </div>

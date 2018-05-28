@@ -54,6 +54,12 @@ body {
   left:70px;
 }
 
+.chart-view-header{
+  padding-top: 30px;
+  padding-bottom: 0px; 
+  text-align: center;
+}
+
 
 .company-info h1{
   position: relative; 
@@ -71,5 +77,5 @@ body {
 }
 .company-info h4{
   position: relative; 
-  font-size: 1vw; 
+  font-size: 1.5vw; 
 }
