@@ -1,6 +1,6 @@
 import React from 'react'; 
 import {connect} from 'react-redux';
-import {Grid, Table, Header} from 'semantic-ui-react';
+import {Grid, Table, Container, Header} from 'semantic-ui-react';
 import Data from '../api/data';
 import FinancialsTable from './FinancialsTable';
 
@@ -17,11 +17,11 @@ class FinancialsView extends React.Component{
     renderFinancialsTable = () =>{
 
         return(
-            <div>
-                <FinancialsTable title={"Income Statement"} data={this.state.data}/>
-                <FinancialsTable title={"Balance Sheet"} data={this.state.data}/>
-                <FinancialsTable title={"Cash Flow"} data={this.state.data}/>
-            </div>  
+            <Container>
+                <FinancialsTable table={"Income Statement"} data={this.state.data}/>
+                <FinancialsTable table={"Balance Sheet"} data={this.state.data}/>
+                <FinancialsTable table={"Cash Flow"} data={this.state.data}/>
+            </Container>  
         )
     }
             

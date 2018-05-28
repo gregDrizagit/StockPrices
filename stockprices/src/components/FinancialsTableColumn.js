@@ -2,50 +2,94 @@ import React from 'react';
 import {Table, Header} from 'semantic-ui-react';
 
 
-const FinancialsTableColumn = (props) => {
+class FinancialsTableColumn extends React.Component {
 
-    const columnsToRender = {}; 
+    state = {}
 
-   switch(props.table){
+    componentDidMount() {
+        const cols = this.parseTableData(this.props); 
+        this.setState({columns: cols})
+    }
 
-        case "Income Statement":
-           
-            const incomeKeys = ["grossProfit", "costOfRevenue", 
-                                "operatingRevenue", "totalRevenue", 
-                                "operatingIncome", "netIncome", 
-                                "researchAndDevelopment", "operatingExpense"]; 
 
-            incomeKeys.forEach(key => {
-                columnsToRender[key] = props.column[key]
-            })
-            break;
-        case "Balance Sheet":
+    generateRowHeaders = () => {
+
+       const headers = Object.keys(this.state.columns).map(col => {
+            return (
+                <div>
+                    <Table.Row>
+                        <Table.HeaderCell>
+                            <Header as='h5'>
+                                {col}
+                            </Header>
+                        </Table.HeaderCell>
+                    </Table.Row>
+                </div>
+
+            )
+        })
+
+        return headers; 
+        
+    }
+
+    parseTableData = (props) => {
+        const columnsToRender = {}; 
+
+        switch(props.table){
+                case "Income Statement":
+                
+                    const incomeKeys = ["grossProfit", "costOfRevenue", 
+                                        "operatingRevenue", "totalRevenue", 
+                                        "operatingIncome", "netIncome", 
+                                        "researchAndDevelopment", "operatingExpense"]; 
+
+                    incomeKeys.forEach(key => {
+                        columnsToRender[key] = props.column[key]
+                    })
+                    return columnsToRender           
+
+                    break;
+                case "Balance Sheet":
+                    
+                    const balanceKeys = ["currentAssets", "totalAssets", "totalLiabilities", "currentCash", 
+                                        "currentDebt", "totalCash", "totalDebt", "shareholderEquity" ];
+
+                    balanceKeys.forEach(key => {
+                        columnsToRender[key] = props.column[key]
+                    })     
+                    return columnsToRender           
+       
+                    break;
+
+                case "Cash Flow":
+
+                    const cashFlowKeys = ["cashChange", "cashFlow"];
+
+                    cashFlowKeys.forEach(key => {
+                        columnsToRender[key] = props.column[key]
+                    }) 
+                    return columnsToRender           
+
+                    break;
+            }
+    }
+
+    render(){
+        console.log(this.props)
+        return(
+            <div>
+                {
+                    this.state.columns ?
+                        this.generateRowHeaders()
+                        // this.testStructure()
+                    :
+                    null
+                } 
             
-            const balanceKeys = ["currentAssets", "totalAssets", "totalLiabilities", "currentCash", 
-                                 "currentDebt", "totalCash", "totalDebt", "shareholderEquity" ];
-
-            balanceKeys.forEach(key => {
-                columnsToRender[key] = props.column[key]
-            })            
-            break;
-
-        case "Cash Flow":
-
-            const cashFlowKeys = ["cashChange", "cashFlow"];
-
-            cashFlowKeys.forEach(key => {
-                columnsToRender[key] = props.column[key]
-            })            
-
-            break;
-   }
-
-  console.log(columnsToRender)
-    return(
-        <Table.Row>
-            
-        </Table.Row>
-    )
+            </div>
+        )
+    }
 }
 
 
