@@ -9,9 +9,19 @@ class FinancialsView extends React.Component{
     state = {}
 
     componentDidMount(){
-        Data.getFinancialsForSymbol(this.props.companyData.symbol).then(data => {
-            this.setState({data: data})
-        })
+        if(localStorage.getItem('lastSymbol'))
+        {
+            let lastSymbol = localStorage.getItem('lastSymbol');
+
+            Data.getFinancialsForSymbol(lastSymbol).then(data => {
+                this.setState({data: data})
+            })
+            
+        }else{
+            Data.getFinancialsForSymbol(this.props.companyData.symbol).then(data => {
+                this.setState({data: data})
+            })
+        }
     }
 
     renderFinancialsTable = () =>{
@@ -34,12 +44,16 @@ class FinancialsView extends React.Component{
 
 
     render(){
+        console.log(this.state)
         return(
             <div className={'table-view'}>
-                <h1>{this.props.companyData.companyName} Financials </h1>
                 {
                     this.state.data ?
-                        this.renderFinancialsTable()
+                    <div>
+                        <h1>{this.state.data.symbol} Financials </h1>
+                        {this.renderFinancialsTable()}
+                    </div>
+
                     :
                         null
                 }

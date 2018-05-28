@@ -23,7 +23,21 @@ class ChartView extends React.Component{
     }
 
     componentDidMount(){
-        this.getSymbolData(); 
+
+        if(localStorage.getItem("lastSymbol")){
+            
+            let lastSymbol = localStorage.getItem("lastSymbol"); 
+            Data.getChartForSymbolAtInterval(lastSymbol, this.state.interval)
+            .then(data => this.restructureChartData(data)); 
+    
+            Data.getBookForSymbol(lastSymbol)
+            .then(book => this.props.dispatch(addBook(book)))
+
+        }else{
+            
+            this.getSymbolData(); 
+
+        }
     }
 
 
@@ -105,45 +119,50 @@ class ChartView extends React.Component{
     }
 
     render(){
+        console.log("Chart props",this.props)
         const company = this.props.companyData
         return(
             <div className='chart-view-body'>
                 <Grid columns={2} divided>
                     <Grid.Column stretched width={10}>
+                    
                     <div className="chart-view-header">
-                        <h2>{this.props.companyData.companyName} Stock Prices - {this.state.interval}</h2>
-                    </div>
+                    
                         {
                             this.state.data ? 
+                            <div>
+                                <h2>{this.props.book.quote.companyName} Stock Prices - {this.state.interval}</h2>
 
-                            <div className={'chart-column'}>
-                                <Chart
-                                    chartType="LineChart"
-                                    rows={this.state.data.rows}
-                                    columns={this.state.data.columns}
-                                    options={this.state.options}
-                                    graph_id="LineChart"
-                                    width="100%"
-                                    height='85vh'
-                                    legend_toggle
-                                />
+                                <div className={'chart-column'}>
+                                    <Chart
+                                        chartType="LineChart"
+                                        rows={this.state.data.rows}
+                                        columns={this.state.data.columns}
+                                        options={this.state.options}
+                                        graph_id="LineChart"
+                                        width="100%"
+                                        height='85vh'
+                                        legend_toggle
+                                    />
 
-                                 <div style={{textAlign: "center"}}>
-                                    <Button.Group basic >
-                                        <Button onClick={() => this.handleIntervalButtons('ytd')} content="YTD" />
-                                        <Button onClick={() => this.handleIntervalButtons('1m')} content="1M" />
-                                        <Button onClick={() => this.handleIntervalButtons('3m')} content="3M" />
-                                        <Button onClick={() => this.handleIntervalButtons('6m')} content="6M" />
-                                        <Button onClick={() => this.handleIntervalButtons('1y')} content="1Y" />
-                                        <Button onClick={() => this.handleIntervalButtons('2y')} content="2Y" />
-                                        <Button onClick={() => this.handleIntervalButtons('5y')} content="5Y" />
-                                    </Button.Group>
+                                    <div style={{textAlign: "center"}}>
+                                        <Button.Group basic >
+                                            <Button onClick={() => this.handleIntervalButtons('ytd')} content="YTD" />
+                                            <Button onClick={() => this.handleIntervalButtons('1m')} content="1M" />
+                                            <Button onClick={() => this.handleIntervalButtons('3m')} content="3M" />
+                                            <Button onClick={() => this.handleIntervalButtons('6m')} content="6M" />
+                                            <Button onClick={() => this.handleIntervalButtons('1y')} content="1Y" />
+                                            <Button onClick={() => this.handleIntervalButtons('2y')} content="2Y" />
+                                            <Button onClick={() => this.handleIntervalButtons('5y')} content="5Y" />
+                                        </Button.Group>
+                                    </div>
                                 </div>
                             </div>                           
                             :
                             <h1>Loading</h1>
 
                         }
+                        </div>
                     </Grid.Column>
                     <Grid.Column className={'data-column'} width={6}>
                         
@@ -151,7 +170,7 @@ class ChartView extends React.Component{
                     {
                         this.props.book ?
                         <div>
-                            this.renderDataTable(this.props.book.quote)
+                            {this.renderDataTable(this.props.book.quote)}
                             <Button className={'financials-button'} 
                                 color="yellow" 
                                 content="View Financial Tables" 

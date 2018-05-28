@@ -21,17 +21,15 @@ class HomeView extends React.Component{
         });
 
        
-
-        Data.getMostActive().then(active => {
-            this.setState({mostActive: active})
-        })
+        //Most active isn't working because the market is closed. 
+        // Data.getMostActive().then(active => {
+        //     this.setState({mostActive: active})
+        // })
 
         Companies.getMarketNews().then(news => this.setState({news: news})); 
     }
     
     renderChange = (data) => {
-        console.log(data)
-        let change = ''; 
         switch(Math.sign(data.quote.extendedChange)){
             case 1:
                 return <h2 style={{color:'green'}}>+{data.quote.extendedChange} ({data.quote.extendedChangePercent.toFixed(5)}%) </h2>
@@ -101,7 +99,7 @@ class HomeView extends React.Component{
                                 <SearchCompany />
                          </div>
                     </div>
-                    <div className={'most-active'}>
+                    {/* <div className={'most-active'}>
                         <h3>Most Active Stocks</h3>
                     {
                         this.state.mostActive ?
@@ -110,7 +108,7 @@ class HomeView extends React.Component{
 
                         null
                     }
-                    </div>
+                    </div> */}
                     <div className={"news-container"}>
                         <h3>News</h3>
 

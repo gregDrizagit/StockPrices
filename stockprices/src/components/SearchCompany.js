@@ -30,6 +30,8 @@ class SearchCompany extends React.Component{
 
         Data.getBookForSymbol(value)
         .then(book => this.props.dispatch(addBook(book))) 
+        
+        localStorage.setItem("lastSymbol", value); 
 
     }
 
