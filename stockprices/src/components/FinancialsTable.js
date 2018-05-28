@@ -1,47 +1,58 @@
 import React from 'react';
-import FinancialsTableRow from './FinancialsTableRow';
+import FinancialsTableColumn from './FinancialsTableColumn';
 import {Table, Header} from 'semantic-ui-react';
 
 const FinancialsTable = (props) => {
-    const headerCells = Object.keys(props.data).map(key => <Table.HeaderCell>{key}</Table.HeaderCell>)
-    console.log(props)
+   
+    console.log("f tables",props)
+    
     return(
         <Table basic='very' celled collapsing>
             <Table.Header>
                 <Table.Row>
                 <Table.HeaderCell>
-                        <Header as='h4'>
+                        <Header as='h2'>
                             <Header.Content>
                                 {props.title}
                             </Header.Content>
                         </Header>
-                    </Table.HeaderCell>
-                    {headerCells}
-
+                 </Table.HeaderCell>
+                 <Table.HeaderCell>
+                        <Header as='h3'>
+                            <Header.Content>
+                                {props.data.financials[0].reportDate}
+                            </Header.Content>
+                        </Header>
+                 </Table.HeaderCell>
+                 <Table.HeaderCell>
+                        <Header as='h3'>
+                            <Header.Content>
+                                {props.data.financials[1].reportDate}
+                            </Header.Content>
+                        </Header>
+                 </Table.HeaderCell>
+                 <Table.HeaderCell>
+                        <Header as='h3'>
+                            <Header.Content>
+                                {props.data.financials[2].reportDate}
+                            </Header.Content>
+                        </Header>
+                 </Table.HeaderCell>
+                 <Table.HeaderCell>
+                        <Header as='h3'>
+                            <Header.Content>
+                                {props.data.financials[3].reportDate}
+                            </Header.Content>
+                        </Header>
+                 </Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
-              
-            <Table.Body>
-                <Table.Row>
-                    <Table.Cell>
-                        Parameter
-                    </Table.Cell>
-                
-                    <Table.Cell>
-                        45
-                    </Table.Cell>
 
-                    <Table.Cell>
-                        22
-                    </Table.Cell>
-                    <Table.Cell>
-                        2266
-                    </Table.Cell>
-                    <Table.Cell>
-                        123454
-                    </Table.Cell>
-                    
-                </Table.Row>
+            <Table.Body>
+                <FinancialsTableColumn table={props.title} column={props.data.financials[0]}/>
+                <FinancialsTableColumn table={props.title} column={props.data.financials[1]}/>
+                <FinancialsTableColumn table={props.title} column={props.data.financials[2]}/>
+                <FinancialsTableColumn table={props.title} column={props.data.financials[3]}/>
 
             </Table.Body>
         </Table>
@@ -49,3 +60,4 @@ const FinancialsTable = (props) => {
 }
 
 export default FinancialsTable; 
+
