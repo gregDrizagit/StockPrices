@@ -2,6 +2,7 @@ import React from 'react';
 import SearchCompany from './SearchCompany'; 
 import MostActive from './MostActive'; 
 import NewsCard from './NewsCard';
+import Nav from './Nav';
 import Companies from '../api/companies';
 import Data from '../api/data'; 
 import {connect} from 'react-redux';
@@ -19,12 +20,7 @@ class HomeView extends React.Component{
             this.props.dispatch(addSymbols(mappedSymbols)); 
         });
 
-        // Data.getLosersList().then(losers => {
-        //     this.setState({losers: losers})
-        // }); //MARKET IS CLOSED TODAY
-        // Data.getGainersList().then(gainers => {
-        //     this.setState({gainers: gainers})
-        // });
+       
 
         Data.getMostActive().then(active => {
             this.setState({mostActive: active})
@@ -73,6 +69,8 @@ class HomeView extends React.Component{
             let company = this.unpackComapnyData(this.props.companyData)
             return(
                 <div>
+                    <Nav />
+
                     <div className={"company-selection"}>
 
                         {
@@ -92,6 +90,7 @@ class HomeView extends React.Component{
                             </div>
                             :
                             <div className={"company-info"}>
+
                                 <h1>Market View</h1>
                                 <h2>An app by Greg Driza </h2>
                                 <h3>View the code on <a href="https://github.com/gregDrizagit/StockPrices">GitHub</a></h3>

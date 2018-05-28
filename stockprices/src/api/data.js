@@ -37,6 +37,10 @@ class Data{
 
     }
 
+    static getMarketOverview(){
+        return fetch(requestPrefix + '/stock/market/batch?symbols=SPY,DIA,ONEQ&types=quote,chart').then(resp => resp.json())
+    }
+
 }
 
 export default Data; 

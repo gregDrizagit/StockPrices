@@ -147,7 +147,6 @@ class ChartView extends React.Component{
                         }
                     </Grid.Column>
                     <Grid.Column stretched className={'data-column'} width={6}>
-                    <h3>View Financial Tables: </h3><Icon size='large' name="chevron right" onClick={() => this.props.history.push('/financials')}/>
 
                     {
                         this.props.book ?
