@@ -25,7 +25,7 @@ class Data{
     }
     
     static getGainersList(){
-        return fetch(requestPrefix + `/stock/market/list/mostactive`).then(resp => resp.json())
+        return fetch(requestPrefix + `/stock/market/list/losers`).then(resp => resp.json())
 
     }
     static getLosersList(){
@@ -33,7 +33,7 @@ class Data{
 
     }
     static getMostActive(){
-        return fetch(requestPrefix + `/stock/market/list/losers`).then(resp => resp.json())
+        return fetch(requestPrefix + `/stock/market/list/mostactive`).then(resp => resp.json())
 
     }
 

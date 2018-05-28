@@ -81,9 +81,7 @@ class FinancialsTableColumn extends React.Component {
             <div>
                 {
                     this.state.columns ?
-                        this.generateRowHeaders()
-                        // this.testStructure()
-                    :
+                        this.generateRowHeaders()                    :
                     null
                 } 
             

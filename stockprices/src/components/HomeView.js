@@ -1,7 +1,9 @@
 import React from 'react';
 import SearchCompany from './SearchCompany'; 
-import NewsCard from './NewsCard'
+import MostActive from './MostActive'; 
+import NewsCard from './NewsCard';
 import Companies from '../api/companies';
+import Data from '../api/data'; 
 import {connect} from 'react-redux';
 import {Segment, Container, Header, Grid, Card, Icon} from 'semantic-ui-react';
 import {addSymbols} from '../actions';
@@ -16,6 +18,17 @@ class HomeView extends React.Component{
             let mappedSymbols = symbols.map(item => {return {key: item.symbol, value:item.symbol, text:item.symbol+ " - " + item.name }});
             this.props.dispatch(addSymbols(mappedSymbols)); 
         });
+
+        // Data.getLosersList().then(losers => {
+        //     this.setState({losers: losers})
+        // }); //MARKET IS CLOSED TODAY
+        // Data.getGainersList().then(gainers => {
+        //     this.setState({gainers: gainers})
+        // });
+
+        Data.getMostActive().then(active => {
+            this.setState({mostActive: active})
+        })
 
         Companies.getMarketNews().then(news => this.setState({news: news})); 
     }
@@ -90,6 +103,15 @@ class HomeView extends React.Component{
                          <div className={"search-bar"}>
                                 <SearchCompany />
                          </div>
+                    </div>
+                    <div className={"losers-gainers"}>
+                    {
+                        this.state.mostActive ?
+                            <MostActive mostActive={this.state.mostActive} />
+                        :
+
+                        null
+                    }
                     </div>
                     <div className={"news-container"}>
                         {
