@@ -27,7 +27,7 @@ class FinancialsTable extends React.Component{
                 return (
                     <Table.Row>
                         <Table.HeaderCell>
-                            <Header as='h6'>
+                            <Header as='h3'>
                                 {col}
                             </Header>
                         </Table.HeaderCell>
@@ -99,7 +99,7 @@ class FinancialsTable extends React.Component{
 
     render(){
         return(
-            <Table celled style={{tableLayout: 'fixed'}}>
+            <Table basic='very' selectable celled style={{tableLayout: 'fixed'}}>
                 <Table.Header>
                     <Table.Row>
                     <Table.HeaderCell>

@@ -69,12 +69,12 @@ class HomeView extends React.Component{
 
                                 <h1>{company.companyName} ({company.symbol})</h1>
                                 <h2>{this.props.delayedQuote.delayedPrice} USD {this.renderChange(this.props.book)}</h2>
-                                <h4>{company.exchange} - {company.industry}</h4>
+                                <h3>{company.exchange} - {company.industry}</h3>
                                 <h3>CEO: {company.CEO}</h3>
                             
                                 <h5>{company.description}</h5>
 
-                                <h2>See More Data: </h2><Icon name={"chevron right"} onClick={() => this.props.history.push('/chart')} />
+                                <h3>See More Data: </h3><Icon size='large' name={"chevron right"} onClick={() => this.props.history.push('/chart')} />
                                
                             </div>
                             :
